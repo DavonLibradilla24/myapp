@@ -343,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const HospitalPage()), // Navigate to First Aid Page
+                                    HospitalPage()), // Navigate to First Aid Page
                           );
                         },
                         style: ElevatedButton.styleFrom(

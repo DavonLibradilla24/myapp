@@ -1,85 +1,113 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HospitalPage extends StatefulWidget {
   const HospitalPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HospitalPageState createState() => _HospitalPageState();
 }
 
 class _HospitalPageState extends State<HospitalPage> {
-  late GoogleMapController mapController;
+  late GoogleMapController _mapController;
+  LatLng _initialPosition = LatLng(14.5538, 121.0453); // Default location
+  final Set<Marker> _markers = {};
 
-  // Initial position of the map (for example: a hospital's coordinates)
-  static const LatLng _initialPosition = LatLng(14.5995, 120.9842); // Example: Manila coordinates
-
-  // // Marker for hospital location (customize this with your hospital's coordinates)
-  // SetP<Marker> _markers = {
-  //   Marker(
-  //     markerId: MarkerId('hospital_marker'),
-  //     position: _initialPosition,
-  //     infoWindow: InfoWindow(title: 'Hospital Name'),
-  //   ),
-  // };
-
-  // This function will be used to create and control the map's camera movement.
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
   }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Hospital Page'),
-//       ),
-//       body: Column(
-//         children: [
-//           // Google Map Widget
-//           Expanded(
-//             child: GoogleMap(
-//               onMapCreated: _onMapCreated,
-//               initialCameraPosition: CameraPosition(
-//                 target: _initialPosition,
-//                 zoom: 14.0,
-//               ),
-//               markers: _markers,
-//             ),
-//           ),
-//           // Button Below the Map
-//           Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: ElevatedButton(
-//               onPressed: () {
-//                 // Your button action goes here
-//                 print('Button clicked');
-//               },
-//               child: Text('Get Directions'),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  // Method to get current location
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // If not enabled, prompt the user
+      await Geolocator.openLocationSettings();
+      return Future.error('Location services are disabled.');
+    }
+
+    // Check for location permissions
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are permanently denied
+      return Future.error('Location permissions are permanently denied.');
+    }
+
+    // Retrieve the current position
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    setState(() {
+      _initialPosition = LatLng(position.latitude, position.longitude);
+      _markers.add(
+        Marker(
+          markerId: MarkerId('currentLocation'),
+          position: _initialPosition,
+          infoWindow: InfoWindow(title: 'You are here'),
+        ),
+      );
+
+      // Move the camera to the user's location
+      _mapController.animateCamera(
+        CameraUpdate.newLatLng(_initialPosition),
+      );
+    });
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
-        ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _initialPosition,
-            zoom: 11.0,
+    return Scaffold(
+      appBar: AppBar(
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3593140190.
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blueAccent,
+        title: Text('Hospital Page'),
+      ),
+      body: Column(
+        children: [
+          // Google Map Widget
+          Expanded(
+            child: GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: _initialPosition,
+                zoom: 14.0,
+              ),
+              markers: _markers,
+              myLocationEnabled: true, // Show the user's location on the map
+              myLocationButtonEnabled: true,
+            ),
           ),
-        ),
+          // Button Below the Map
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                _getCurrentLocation();
+              },
+              child: Text('Get My Location'),
+            ),
+          ),
+        ],
       ),
     );
   }
