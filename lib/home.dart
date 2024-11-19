@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My App',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
+      ),
       home: const HomePage(),
     );
   }
@@ -187,29 +190,58 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       width: double
                           .infinity, // Ensures the button takes up the full width available
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BlsPage()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          padding: const EdgeInsets.symmetric(
-                              vertical:
-                                  15), // Controls height without affecting width
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black, // Outline color
+                            width: 1, // Outline width
                           ),
-                          elevation: 0,
+                          borderRadius: BorderRadius.circular(
+                              12), // Matches the button's border radius
                         ),
-                        child: const Text(
-                          'BASIC LIFE SUPPORT',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white, // Set text color
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BlsPage()),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.redAccent,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15), // Controls height
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 5, // Increase elevation for shadow
+                            shadowColor: Colors.black
+                                .withOpacity(0.5), // Customize shadow color
+                          ),
+                          child: Stack(
+                            children: [
+                              // Text outline using a shadow effect
+                              Text(
+                                'BASIC LIFE SUPPORT',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  foreground: Paint()
+                                    ..style = PaintingStyle.stroke
+                                    ..strokeWidth = 1
+                                    ..color = Colors.black, // Outline color
+                                ),
+                              ),
+                              // Main filled text
+                              const Text(
+                                'BASIC LIFE SUPPORT',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white, // Text color
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -218,31 +250,62 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       width: double
                           .infinity, // Ensures the button takes up the full width available
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    FirstAidPage()), // Navigate to First Aid Page
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.greenAccent,
-                          padding: const EdgeInsets.symmetric(
-                              vertical:
-                                  15), // Controls height without affecting width
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black, // Outline color
+                            width: 1, // Outline width
                           ),
-                          elevation: 0,
+                          borderRadius: BorderRadius.circular(
+                              12), // Border radius for the outline
                         ),
-                        child: const Text(
-                          'FIRST AID',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black, // Set text color
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    FirstAidPage(), // Navigate to First Aid Page
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.greenAccent, // Button color
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15), // Controls height
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  10), // Button border radius
+                            ),
+                            elevation: 5, // Add shadow to the button
+                            shadowColor: Colors.black
+                                .withOpacity(0.5), // Customize shadow color
+                          ),
+                          child: Stack(
+                            children: [
+                              // Text outline using a shadow effect
+                              Text(
+                                'FIRST AID',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  foreground: Paint()
+                                    ..style = PaintingStyle.stroke
+                                    ..strokeWidth = 1
+                                    ..color = Colors
+                                        .black, // Outline color for the text
+                                ),
+                              ),
+                              // Main filled text
+                              const Text(
+                                'FIRST AID',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white, // Main text color
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -291,19 +354,24 @@ class _HomePageState extends State<HomePage> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.local_hospital_rounded,
-                                color: Colors.white),
-                            SizedBox(width: 10),
-                            Text(
+                            // Replace Icon with your custom icon from assets
+                            Image.asset(
+                              'assets/hospital (1).png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            const SizedBox(width: 10),
+                            const Text(
                               'Nearest Hospital',
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
@@ -331,16 +399,18 @@ class _HomePageState extends State<HomePage> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.checklist, // Checklist icon
-                              color: Colors.white,
-                              size: 24, // Adjust the size of the icon
+                            // Replace the built-in icon with your custom icon
+                            Image.asset(
+                              'assets/first-aid-kit.png',
+                              width: 24,
+                              height: 24,
                             ),
-                            SizedBox(width: 10), // Space between icon and text
-                            Text(
+                            const SizedBox(
+                                width: 10), // Space between icon and text
+                            const Text(
                               'First Aid Kit Checklist',
                               style: TextStyle(
                                 fontSize: 18,
@@ -370,18 +440,24 @@ class _HomePageState extends State<HomePage> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.facebook, color: Colors.white),
-                            SizedBox(width: 10),
-                            Text(
+                            // Replace Icon with your custom icon
+                            Image.asset(
+                              'assets/facebook.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            const SizedBox(width: 10),
+                            const Text(
                               'Socials',
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
@@ -405,18 +481,25 @@ class _HomePageState extends State<HomePage> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.phone, color: Colors.white),
-                            SizedBox(width: 10),
-                            Text(
+                            // Use a custom icon instead of the built-in icon
+                            Image.asset(
+                              'assets/telephone.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            const SizedBox(
+                                width: 10), // Space between icon and text
+                            const Text(
                               'Help',
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
@@ -492,16 +575,36 @@ class BlsPage extends StatelessWidget {
 class FirstAidPage extends StatelessWidget {
   final List<Map<String, String>> injuries = [
     {
-      'name': 'Burn',
-      'image': 'assets/burn_logo.png', // Replace with actual image asset
+      'name': 'Sore Eyes',
+      'image': 'assets/sore-eyes.png', // Replace with actual image asset
     },
     {
       'name': 'Wound',
-      'image': 'assets/wound_logo.png', // Replace with actual image asset
+      'image': 'assets/wounded.png', // Replace with actual image asset
     },
     {
       'name': 'Fever',
-      'image': 'assets/fever_logo.png', // Replace with actual image asset
+      'image': 'assets/fever.png', // Replace with actual image asset
+    },
+    {
+      'name': 'Heart Attack',
+      'image': 'assets/heart-attack.png', // Replace with actual image asset
+    },
+    {
+      'name': 'Broken Leg',
+      'image': 'assets/broken-bone.png', // Replace with actual image asset
+    },
+    {
+      'name': 'Nose Bleeding',
+      'image': 'assets/nose-bleeding.png', // Replace with actual image asset
+    },
+    {
+      'name': 'Siezures',
+      'image': 'assets/epilepsy.png', // Replace with actual image asset
+    },
+    {
+      'name': 'Cerebral',
+      'image': 'assets/cerebral.png', // Replace with actual image asset
     },
     // Add more injuries here
   ];

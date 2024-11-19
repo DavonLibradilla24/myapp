@@ -16,7 +16,7 @@ class _HospitalPageState extends State<HospitalPage> {
   static const LatLng _initialPosition = LatLng(14.5995, 120.9842); // Example: Manila coordinates
 
   // // Marker for hospital location (customize this with your hospital's coordinates)
-  // Set<Marker> _markers = {
+  // SetP<Marker> _markers = {
   //   Marker(
   //     markerId: MarkerId('hospital_marker'),
   //     position: _initialPosition,
