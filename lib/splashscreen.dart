@@ -40,7 +40,8 @@ class _SplashScreenState extends State<SplashScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Permission Required'),
-          content: const Text('Location permission is required to proceed. Please allow it in the settings.'),
+          content: const Text(
+              'Location permission is required to proceed. Please allow it in the settings.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -73,8 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Image.asset(
               'assets/logo_splashscreen.gif',
-              width: 400,
-              height: 400,
+              width: 300,
+              height: 300,
             ),
           ],
         ),

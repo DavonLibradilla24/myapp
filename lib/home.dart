@@ -1,3 +1,4 @@
+import 'package:basic_life_support_and_first_aid_app/help_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'hospital.dart';
@@ -471,7 +472,10 @@ class _HomePageState extends State<HomePage> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Open Help page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HelpPage()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
