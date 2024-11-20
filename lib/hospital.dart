@@ -11,7 +11,7 @@ class HospitalPage extends StatefulWidget {
 
 class _HospitalPageState extends State<HospitalPage> {
   late GoogleMapController _mapController;
-  LatLng _initialPosition = LatLng(14.5538, 121.0453); // Default location
+  LatLng _initialPosition = LatLng(14.5547, 121.0285); // Default location
   final Set<Marker> _markers = {};
 
   @override
