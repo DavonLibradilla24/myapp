@@ -580,40 +580,46 @@ class FirstAidPage extends StatelessWidget {
   final List<Map<String, String>> injuries = [
     {
       'name': 'Sore Eyes',
-      'image': 'assets/sore-eyes.png', // Replace with actual image asset
+      'image': 'assets/sore-eyes.png',
+      'care': 'Flush the eyes with clean water. Apply a cold compress.',
     },
     {
       'name': 'Wound',
-      'image': 'assets/wounded.png', // Replace with actual image asset
+      'image': 'assets/wounded.png',
+      'care': 'Clean the wound with clean water and cover it with a sterile bandage.',
     },
     {
       'name': 'Fever',
-      'image': 'assets/fever.png', // Replace with actual image asset
+      'image': 'assets/fever.png',
+      'care': 'Rest, stay hydrated, and take fever-reducing medication.',
     },
     {
       'name': 'Heart Attack',
-      'image': 'assets/heart-attack.png', // Replace with actual image asset
+      'image': 'assets/heart-attack.png',
+      'care': 'Call emergency services. Perform CPR if necessary.',
     },
     {
       'name': 'Broken Leg',
-      'image': 'assets/broken-bone.png', // Replace with actual image asset
+      'image': 'assets/broken-bone.png',
+      'care': 'Keep the leg immobilized and call for emergency medical help.',
     },
     {
       'name': 'Nose Bleeding',
-      'image': 'assets/nose-bleeding.png', // Replace with actual image asset
+      'image': 'assets/nose-bleeding.png',
+      'care': 'Pinch your nose and lean forward to stop the bleeding.',
     },
     {
-      'name': 'Siezures',
-      'image': 'assets/epilepsy.png', // Replace with actual image asset
+      'name': 'Seizures',
+      'image': 'assets/epilepsy.png',
+      'care': 'Protect the person from injury and call for medical help if the seizure lasts more than 5 minutes.',
     },
     {
       'name': 'Cerebral',
-      'image': 'assets/cerebral.png', // Replace with actual image asset
+      'image': 'assets/cerebral.png',
+      'care': 'Seek immediate medical help. Administer CPR if needed.',
     },
-    // Add more injuries here
+    // Add more injuries with their care instructions here
   ];
-
-  FirstAidPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -635,7 +641,6 @@ class FirstAidPage extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 // Navigate to the detail page for the selected injury
-                // For example, show details of the selected injury
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -648,8 +653,7 @@ class FirstAidPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(injuries[index]['image']!,
-                        width: 60, height: 60), // Display image
+                    Image.asset(injuries[index]['image']!, width: 60, height: 60),
                     const SizedBox(height: 8),
                     Text(
                       injuries[index]['name']!,
@@ -666,6 +670,7 @@ class FirstAidPage extends StatelessWidget {
     );
   }
 }
+
 
 class InjuryDetailPage extends StatelessWidget {
   final Map<String, String> injury;
@@ -693,10 +698,10 @@ class InjuryDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Instructions for treating the ${injury['name']} injury would go here.',
+              injury['care']!, // Display care instructions from the injury data
               style: const TextStyle(fontSize: 18),
             ),
-            // Add more details here
+            // Add more details here if needed
           ],
         ),
       ),
